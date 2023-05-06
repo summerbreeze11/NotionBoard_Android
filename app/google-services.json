@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "966211237889",
+    "project_id": "notionboardandroid-3d874",
+    "storage_bucket": "notionboardandroid-3d874.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966211237889:android:50e5f7f1efc1f8c213a800",
+        "android_client_info": {
+          "package_name": "com.summerbreeze11.notionboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966211237889-hom8ebcdkavo5o587l7vvktoq4fkunuh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTCCFE7A8uEy4V4rPwDQKx9CEEN9vL8Cs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966211237889-hom8ebcdkavo5o587l7vvktoq4fkunuh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
