@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">NotionBoard</string>
+    <!-- Menu Drawer Strings -->
+    <string name="ad_category_1">Объявления</string>
+    <string name="ad_my_ads">Мои объявления</string>
+    <string name="ad_car">Машины</string>
+    <string name="ad_pc">Компьютеры</string>
+    <string name="ad_smartphones">Смартфоны</string>
+    <string name="ad_home_appliance">Бытовая техника</string>
+
+    <string name="ad_category_2">Аккаунт</string>
+    <string name="ac_sign_up">Регистрация</string>
+    <string name="ac_sign_in">Вход</string>
+    <string name="ac_sign_out">Выход</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+</resources>
