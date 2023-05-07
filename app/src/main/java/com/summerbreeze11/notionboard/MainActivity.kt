@@ -8,24 +8,28 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import com.google.firebase.auth.FirebaseAuth
 import com.summerbreeze11.notionboard.databinding.ActivityMainBinding
+import com.summerbreeze11.notionboard.dialoghelper.DialogConst
+import com.summerbreeze11.notionboard.dialoghelper.DialogHelper
 
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
+    private val dialogHepler = DialogHelper(this)
+    val mAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
-
     }
 
     private fun init() {
         val toggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
-            findViewById(R.id.toolbar),
+            binding.mainContent.toolbar,
             R.string.open,
             R.string.close
         )
@@ -61,12 +65,12 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             }
             R.id.id_sign_up -> {
 
-                Toast.makeText(this, "Presed id_sign_up", Toast.LENGTH_LONG).show()
+                dialogHepler.createSignDialog(DialogConst.SIGN_UP_STATE)
 
             }
             R.id.id_sign_in -> {
 
-                Toast.makeText(this, "Presed id_sign_in", Toast.LENGTH_LONG).show()
+                dialogHepler.createSignDialog(DialogConst.SIGN_IN_STATE)
 
             }
             R.id.id_sign_out -> {
