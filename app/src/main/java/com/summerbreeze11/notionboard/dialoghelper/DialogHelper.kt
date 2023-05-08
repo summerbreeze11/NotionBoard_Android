@@ -13,7 +13,7 @@ class DialogHelper(act: MainActivity) {
     fun createSignDialog(index: Int) {
         val builder = AlertDialog.Builder(act)
         val rootDialogElement = SignDialogBinding.inflate(act.layoutInflater)
-
+        builder.setView(rootDialogElement.root)
         if (index == DialogConst.SIGN_UP_STATE) {
             rootDialogElement.tvSignTitle.text = act.resources.getString(R.string.ac_sign_up)
             rootDialogElement.btSignUpIn.text = act.resources.getString(R.string.sign_up_action)
@@ -21,17 +21,21 @@ class DialogHelper(act: MainActivity) {
             rootDialogElement.tvSignTitle.text = act.resources.getString(R.string.ac_sign_in)
             rootDialogElement.btSignUpIn.text = act.resources.getString(R.string.sign_in_action)
         }
+        val dialog = builder.create()
         rootDialogElement.btSignUpIn.setOnClickListener {
+            dialog.dismiss()
             if (index == DialogConst.SIGN_UP_STATE) {
                 accHelper.signUpWithEmail(
                     rootDialogElement.edSignEmail.text.toString(),
                     rootDialogElement.edSignPassrowd.text.toString()
                 )
             } else {
-
+                accHelper.signInWithEmail(
+                    rootDialogElement.edSignEmail.text.toString(),
+                    rootDialogElement.edSignPassrowd.text.toString()
+                )
             }
         }
-        builder.setView(rootDialogElement.root)
-        builder.show()
+        dialog.show()
     }
 }
