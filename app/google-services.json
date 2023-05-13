@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "966211237889-hom8ebcdkavo5o587l7vvktoq4fkunuh.apps.googleusercontent.com",
+          "client_id": "966211237889-s7u6valn4e5ghi99kbaqrgghrm1mb6nt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.summerbreeze11.notionboard",
+            "certificate_hash": "448998c1ac5961ea144246e09883dfb64b3d9384"
+          }
+        },
+        {
+          "client_id": "966211237889-dvfhqiqja2pohusgb9mudceairo61dkn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "966211237889-hom8ebcdkavo5o587l7vvktoq4fkunuh.apps.googleusercontent.com",
+              "client_id": "966211237889-dvfhqiqja2pohusgb9mudceairo61dkn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
