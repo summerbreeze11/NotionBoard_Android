@@ -1,18 +1,19 @@
 package com.summerbreeze11.notionboard.accounthelper
 
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.*
 import com.summerbreeze11.notionboard.MainActivity
 import com.summerbreeze11.notionboard.R
+import com.summerbreeze11.notionboard.constance.FirebaseAuthConstance
 import com.summerbreeze11.notionboard.dialoghelper.GoogleAccConst
 
 class AccountHelper(act: MainActivity) {
     private val act = act
-    private lateinit var signInClient:GoogleSignInClient
+    private lateinit var signInClient: GoogleSignInClient
     fun signUpWithEmail(email: String, password: String) {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             act.mAuth.createUserWithEmailAndPassword(email, password)
@@ -21,11 +22,33 @@ class AccountHelper(act: MainActivity) {
                         sentEmailVerification(task.result?.user!!)
                         act.uiUpdate(task.result?.user)
                     } else {
-                        Toast.makeText(
-                            act,
-                            act.resources.getString(R.string.sign_up_error),
-                            Toast.LENGTH_LONG
-                        ).show()
+//                        Toast.makeText(
+//                            act,
+//                            act.resources.getString(R.string.sign_up_error),
+//                            Toast.LENGTH_LONG
+//                        ).show()
+                        // Log.d("MyLog", "Exception" + exception.errorCode)
+                        if (task.exception is FirebaseAuthUserCollisionException) {
+                            val exception = task.exception as FirebaseAuthUserCollisionException
+                            if (exception.errorCode == FirebaseAuthConstance.ERROR_EMAIL_ALREADY_IN_USE) {
+                                Toast.makeText(
+                                    act,
+                                    FirebaseAuthConstance.ERROR_EMAIL_ALREADY_IN_USE,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        } else if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                            val exception =
+                                task.exception as FirebaseAuthInvalidCredentialsException
+                            if (exception.errorCode == FirebaseAuthConstance.ERROR_INVALID_EMAIL) {
+                                Toast.makeText(
+                                    act,
+                                    FirebaseAuthConstance.ERROR_INVALID_EMAIL,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
                     }
                 }
         }
@@ -38,11 +61,32 @@ class AccountHelper(act: MainActivity) {
                     if (task.isSuccessful) {
                         act.uiUpdate(task.result?.user)
                     } else {
-                        Toast.makeText(
-                            act,
-                            act.resources.getString(R.string.sign_in_error),
-                            Toast.LENGTH_LONG
-                        ).show()
+                        if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                            val exception =
+                                task.exception as FirebaseAuthInvalidCredentialsException
+                            if (exception.errorCode == FirebaseAuthConstance.ERROR_INVALID_EMAIL) {
+                                Toast.makeText(
+                                    act,
+                                    FirebaseAuthConstance.ERROR_INVALID_EMAIL,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
+                        if (task.exception is FirebaseAuthInvalidUserException) {
+                            val exception =
+                                task.exception as FirebaseAuthInvalidUserException
+                            Log.d("MyLog", "Exception" + exception.errorCode)
+                            if (exception.errorCode == FirebaseAuthConstance.ERROR_USER_NOT_FOUND) {
+                                Toast.makeText(
+                                    act,
+                                    FirebaseAuthConstance.ERROR_USER_NOT_FOUND,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
+
                     }
                 }
         }
@@ -51,19 +95,24 @@ class AccountHelper(act: MainActivity) {
 
     private fun getSignInClient(): GoogleSignInClient {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(act.getString(R.string.default_web_client_idd)).build()
+            .requestIdToken(act.getString(R.string.default_web_client_idd)).requestEmail().build()
         return GoogleSignIn.getClient(act, gso)
     }
-    fun signInWithGoogle(){
+
+    fun signInWithGoogle() {
         signInClient = getSignInClient()
         val intent = signInClient.signInIntent
         act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
     }
-    fun signInFirebaseWithGoogle(token: String){
+
+    fun signInFirebaseWithGoogle(token: String) {
         val credential = GoogleAuthProvider.getCredential(token, null)
-        act.mAuth.signInWithCredential(credential).addOnCompleteListener {task->
-            if(task.isSuccessful) {
+        act.mAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 Toast.makeText(act, "Sign in done", Toast.LENGTH_LONG).show()
+                act.uiUpdate(task.result?.user)
+            } else {
+                Log.d("MyLog", "Google Sign In Exception" + task.exception)
             }
         }
     }
