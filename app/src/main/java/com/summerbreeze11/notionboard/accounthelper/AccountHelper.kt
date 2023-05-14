@@ -75,8 +75,6 @@ class AccountHelper(act: MainActivity) {
                                 ).show()
                             }
                         }
-
-
                     }
                 }
         }
@@ -117,6 +115,10 @@ class AccountHelper(act: MainActivity) {
         signInClient = getSignInClient()
         val intent = signInClient.signInIntent
         act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
+    }
+
+    fun signOutGoogle() {
+        getSignInClient().signOut()
     }
 
     fun signInFirebaseWithGoogle(token: String) {

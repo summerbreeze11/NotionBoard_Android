@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -15,6 +15,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.summerbreeze11.notionboard.activity.EditAdsAct
 import com.summerbreeze11.notionboard.databinding.ActivityMainBinding
 import com.summerbreeze11.notionboard.dialoghelper.DialogConst
 import com.summerbreeze11.notionboard.dialoghelper.DialogHelper
@@ -31,6 +32,19 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.id_new_ads) {
+            val intent = Intent(this, EditAdsAct::class.java)
+            startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -55,6 +69,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     }
 
     private fun init() {
+        setSupportActionBar(binding.mainContent.toolbar)
         val toggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
@@ -108,6 +123,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
                 uiUpdate(null)
                 mAuth.signOut()
+                dialogHepler.accHelper.signOutGoogle()
             }
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
