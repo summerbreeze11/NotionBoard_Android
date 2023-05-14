@@ -27,5 +27,9 @@
     <string name="send_verification_error">Не удалось отправить email для подтверждения</string>
     <string name="send_verification_done">На вашу почту отправлена ссылка для подтверждения аккаунта, пожалуйста подтвердите ваш аккаунт!</string>
     <string name="default_web_client_idd">966211237889-hom8ebcdkavo5o587l7vvktoq4fkunuh.apps.googleusercontent.com</string>
+    <!-- Sign dialog -->
+    <string name="link_done">Email поключен к Google аккаунту </string>
+    <string name="enter_to_google">У вас уже есть аккаунт с этим Email адресом, войдите по нему </string>
+
 
 </resources>

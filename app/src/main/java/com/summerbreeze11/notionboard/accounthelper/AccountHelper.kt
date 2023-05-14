@@ -22,20 +22,10 @@ class AccountHelper(act: MainActivity) {
                         sentEmailVerification(task.result?.user!!)
                         act.uiUpdate(task.result?.user)
                     } else {
-//                        Toast.makeText(
-//                            act,
-//                            act.resources.getString(R.string.sign_up_error),
-//                            Toast.LENGTH_LONG
-//                        ).show()
-                        // Log.d("MyLog", "Exception" + exception.errorCode)
                         if (task.exception is FirebaseAuthUserCollisionException) {
                             val exception = task.exception as FirebaseAuthUserCollisionException
                             if (exception.errorCode == FirebaseAuthConstance.ERROR_EMAIL_ALREADY_IN_USE) {
-                                Toast.makeText(
-                                    act,
-                                    FirebaseAuthConstance.ERROR_EMAIL_ALREADY_IN_USE,
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                linkEmailToGoogle(email, password)
                             }
                         } else if (task.exception is FirebaseAuthInvalidCredentialsException) {
                             val exception =
@@ -90,6 +80,30 @@ class AccountHelper(act: MainActivity) {
                     }
                 }
         }
+    }
+
+    private fun linkEmailToGoogle(email: String, password: String) {
+        val credential = EmailAuthProvider.getCredential(email, password)
+        if (act.mAuth.currentUser != null) {
+            act.mAuth.currentUser?.linkWithCredential(credential)?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        act,
+                        act.resources.getString(R.string.link_done),
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+                }
+            }
+        } else {
+            Toast.makeText(
+                act,
+                act.resources.getString(R.string.enter_to_google),
+                Toast.LENGTH_LONG
+            )
+                .show()
+        }
+
     }
 
 
