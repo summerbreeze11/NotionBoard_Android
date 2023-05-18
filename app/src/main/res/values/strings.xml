@@ -30,6 +30,11 @@
     <!-- Sign dialog -->
     <string name="link_done">Email поключен к Google аккаунту </string>
     <string name="enter_to_google">У вас уже есть аккаунт с этим Email адресом, войдите по нему </string>
+    <!-- Edit activity -->
+    <string name="select_city">Выберите город </string>
+    <!-- Find dialog -->
+    <string name="no_result">Нет совпадений </string>
+
 
 
 </resources>
